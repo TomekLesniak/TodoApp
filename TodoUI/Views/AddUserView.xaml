@@ -4,10 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TodoUI.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Background="White" FontSize="30"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            <TextBlock>Creating new user</TextBlock>
-            <Button x:Name="CreateUser"></Button>
+            <StackPanel Orientation="Vertical">
+            <TextBlock FontSize="32" Margin="0 0 0 10" HorizontalAlignment="Center">Create user</TextBlock>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Row 0 -->
+                    <TextBlock Grid.Row="0" Grid.Column="0">First Name</TextBlock>
+                    <TextBox x:Name="FirstName" Grid.Row="0" Grid.Column="1" Margin="5 0 5 10"></TextBox>
+
+                    <!-- Row 1 -->
+                    <TextBlock Grid.Row="1" Grid.Column="0">Last Name</TextBlock>
+                    <TextBox x:Name="LastName" Grid.Row="1" Grid.Column="1" Margin="5 0 5 10"></TextBox>
+
+                    <!-- Row 2 -->
+                    <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="CreateUser" Margin="5 0 5 0" Padding="5">Create user</Button>
+                        <Button x:Name="CancelCreation" Margin="5 0 5 0" Padding="5" Background="Red" Foreground="White">Cancel</Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
     </Grid>
 </UserControl>

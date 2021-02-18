@@ -6,26 +6,62 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
-    public class AddUserViewModel
+    public class AddUserViewModel : Screen
     {
         private readonly EventAggregatorProvider _eventTracker;
+        private string _lastName;
+        private string _firstName;
 
         public AddUserViewModel(EventAggregatorProvider eventTracker)
         {
             _eventTracker = eventTracker;
         }
 
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            {
+                _firstName = value;
+                NotifyOfPropertyChange(() => FirstName);
+                NotifyOfPropertyChange(() => CanCreateUser);
+            }
+        }
+
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                _lastName = value;
+                NotifyOfPropertyChange(() => LastName);
+                NotifyOfPropertyChange(() => CanCreateUser);
+            }
+        }
+
         public void CreateUser()
         {
-            _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(new UserModel(){FirstName = "Published"});
+            var user = new UserModel()
+            {
+                FirstName = FirstName,
+                LastName = LastName
+            };
+
+            _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(user);
+            this.TryCloseAsync();
         }
 
         public bool CanCreateUser
         {
             get
             {
-                return true;
+                return !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);
             }
+        }
+
+        public void CancelCreation()
+        {
+            this.TryCloseAsync();
         }
     }
 }

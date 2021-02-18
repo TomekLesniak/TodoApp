@@ -30,7 +30,7 @@
                      MaxWidth="250" MinHeight="300"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
                 <Button x:Name="AddUser" Margin="5 0 5 0" Padding="5">Add</Button>
-                <Button x:Name="RemoveUser" Margin="5 0 5 0" Padding="5">Remove</Button>
+                <Button x:Name="RemoveUser" Margin="5 0 5 0" Padding="5" Background="Red" Foreground="White">Remove</Button>
             </StackPanel>
         </StackPanel>
 
