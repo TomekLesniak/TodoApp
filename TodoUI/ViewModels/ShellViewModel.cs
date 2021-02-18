@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using TodoLibrary.Data.Tasks;
 using TodoLibrary.Data.Users;
@@ -13,15 +14,12 @@ namespace TodoUI.ViewModels
     public class ShellViewModel : Conductor<object>
     {
         private readonly IUsersData _usersData;
-        private readonly ITasksData _tasksData;
-        private readonly IUserTasksData _userTasks;
         private BindableCollection<UserModel> _availableUsers;
+        private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData, ITasksData tasksData, IUserTasksData userTasks)
+        public ShellViewModel(IUsersData usersData)
         {
             _usersData = usersData;
-            _tasksData = tasksData;
-            _userTasks = userTasks;
 
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
@@ -37,9 +35,33 @@ namespace TodoUI.ViewModels
             }
         }
 
-        public void CreateUserTest()
+        public UserModel SelectedUser
         {
-            _userTasks.GetUserTasks(1);
+            get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                NotifyOfPropertyChange(() => SelectedUser);
+                NotifyOfPropertyChange(() => CanRemoveUser);
+            }
+        }
+
+        public void AddUser()
+        {
+            MessageBox.Show($"{SelectedUser.FullName}");
+        }
+
+        public void RemoveUser()
+        {
+
+        }
+
+        public bool CanRemoveUser
+        {
+            get
+            {
+                return SelectedUser != null;
+            }
         }
     }
 }

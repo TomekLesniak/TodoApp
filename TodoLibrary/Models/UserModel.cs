@@ -16,5 +16,7 @@ namespace TodoLibrary.Models
         [MaxLength(50)]
         [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

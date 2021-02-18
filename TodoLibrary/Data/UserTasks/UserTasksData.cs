@@ -34,10 +34,4 @@ namespace TodoLibrary.Data.UserTasks
             return output;
         }
     }
-
-    public interface IUserTasksData
-    {
-        void CreateUserTask(UserTasksModel task);
-        List<UserTasksModel> GetUserTasks(int userId);
-    }
 }

@@ -4,9 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TodoUI.Views"
-        mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800">
+        mc:Ignorable="d" FontSize="32"
+        Title="ShellView" Height="800" Width="1200">
     <Grid>
-        <Button x:Name="CreateUserTest">Create </Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <!-- Row 1 -->
+        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">To-Do App</TextBlock>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
+            <TextBlock FontWeight="Bold" FontSize="25" Margin="5 0 5 0">Users</TextBlock>
+            <ListBox x:Name="AvailableUsers" DisplayMemberPath="FullName" 
+                     SelectedItem="{Binding Path=SelectedUser, Mode=OneWayToSource}"
+                     MaxWidth="250" MinHeight="300"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
+                <Button x:Name="AddUser" Margin="5 0 5 0" Padding="5">Add</Button>
+                <Button x:Name="RemoveUser" Margin="5 0 5 0" Padding="5">Remove</Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Row 2 -->
+        <ContentControl Grid.Row="2" Grid.Column="2" x:Name="ActiveItem" Margin="10"></ContentControl>
     </Grid>
 </Window>
