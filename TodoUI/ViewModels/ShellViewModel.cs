@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
@@ -11,16 +12,19 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<object>, IHandle<UserModel>
     {
         private readonly IUsersData _usersData;
+        private readonly EventAggregatorProvider _eventTracker;
         private BindableCollection<UserModel> _availableUsers;
         private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData)
+        public ShellViewModel(IUsersData usersData, EventAggregatorProvider eventTracker)
         {
+            _eventTracker = eventTracker;
+            _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
+         
             _usersData = usersData;
-
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
 
@@ -48,12 +52,12 @@ namespace TodoUI.ViewModels
 
         public void AddUser()
         {
-            MessageBox.Show($"{SelectedUser.FullName}");
+            ActivateItemAsync(new AddUserViewModel(_eventTracker), new CancellationToken());
         }
 
         public void RemoveUser()
         {
-
+            //todo: Remove user from db
         }
 
         public bool CanRemoveUser
@@ -62,6 +66,13 @@ namespace TodoUI.ViewModels
             {
                 return SelectedUser != null;
             }
+        }
+
+        public Task HandleAsync(UserModel message, CancellationToken cancellationToken)
+        {
+            MessageBox.Show(message.FirstName);
+            // todo: AddUser model to available users
+            return Task.CompletedTask;
         }
     }
 }
