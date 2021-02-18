@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using Caliburn.Micro;
+using TodoLibrary;
+using TodoLibrary.Data.Categories;
+using TodoLibrary.Data.Tasks;
+using TodoLibrary.Data.Users;
+using TodoLibrary.Data.UserTasks;
 using TodoUI.ViewModels;
 
 namespace TodoUI
@@ -25,6 +30,14 @@ namespace TodoUI
         {
             _container.Singleton<IWindowManager, WindowManager>();
             _container.Singleton<ShellViewModel>();
+
+            _container.PerRequest<IUsersData, UsersData>();
+            _container.PerRequest<ITasksData, TasksData>();
+            _container.PerRequest<ICategoriesData, CategoriesData>();
+            _container.PerRequest<IUserTasksData, UserTasksData>();
+
+            var dbContext = new ApplicationDbContextFactory().CreateDbContext(new string[]{});
+            _container.RegisterInstance(typeof(ApplicationDbContext), "ApplicationDbContext", dbContext);
         }
 
         protected override object GetInstance(Type service, string key)
