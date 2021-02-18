@@ -26,5 +26,11 @@ namespace TodoLibrary.Data.Users
         {
             return _db.Users.ToList();
         }
+
+        public void RemoveUser(UserModel user)
+        {
+            _db.Remove(user);
+            _db.SaveChanges();
+        }
     }
 }

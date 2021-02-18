@@ -53,11 +53,26 @@ namespace TodoUI.ViewModels
         public void AddUser()
         {
             ActivateItemAsync(new AddUserViewModel(_eventTracker), new CancellationToken());
+            NotifyOfPropertyChange(() => CanAddUser);
+        }
+        
+        public bool CanAddUser
+        {
+            get
+            {
+                if (ActiveItem != null)
+                {
+                    return (ActiveItem.GetType() != typeof(AddUserViewModel));
+                }
+
+                return true;
+            }
         }
 
         public void RemoveUser()
         {
-            //todo: Remove user from db
+            _usersData.RemoveUser(SelectedUser);
+            AvailableUsers.Remove(SelectedUser);
         }
 
         public bool CanRemoveUser
@@ -70,8 +85,16 @@ namespace TodoUI.ViewModels
 
         public Task HandleAsync(UserModel message, CancellationToken cancellationToken)
         {
-            MessageBox.Show(message.FirstName);
-            // todo: AddUser model to available users
+            NotifyOfPropertyChange(() => CanAddUser);
+
+            if (string.IsNullOrWhiteSpace(message.FirstName))
+            {
+                return Task.CompletedTask;
+            }
+            
+            _usersData.CreateUser(message);
+            AvailableUsers.Add(message);
+            
             return Task.CompletedTask;
         }
     }

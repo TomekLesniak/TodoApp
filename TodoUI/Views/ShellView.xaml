@@ -16,25 +16,27 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
         <!-- Row 1 -->
         <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">To-Do App</TextBlock>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
-            <TextBlock FontWeight="Bold" FontSize="25" Margin="5 0 5 0">Users</TextBlock>
-            <ListBox x:Name="AvailableUsers" DisplayMemberPath="FullName" 
-                     SelectedItem="{Binding Path=SelectedUser, Mode=OneWayToSource}"
-                     MaxWidth="250" MinHeight="300"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
-                <Button x:Name="AddUser" Margin="5 0 5 0" Padding="5">Add</Button>
-                <Button x:Name="RemoveUser" Margin="5 0 5 0" Padding="5" Background="Red" Foreground="White">Remove</Button>
-            </StackPanel>
-        </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" Margin="5 0 5 0">Users</TextBlock>
 
         <!-- Row 2 -->
-        <ContentControl Grid.Row="2" Grid.Column="2" x:Name="ActiveItem" Margin="10"></ContentControl>
+        <ListBox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" x:Name="AvailableUsers" DisplayMemberPath="FullName" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 SelectedItem="{Binding Path=SelectedUser, Mode=OneWayToSource}"
+                 MaxWidth="275" MinHeight="300"/>
+
+        <ContentControl Grid.Row="2" Grid.Column="2" Grid.RowSpan="3"  x:Name="ActiveItem" Margin="10"></ContentControl>
+        
+        <!-- Row 4 -->
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
+            <Button x:Name="AddUser" Margin="5 0 5 0" Padding="5">Add</Button>
+            <Button x:Name="RemoveUser" Margin="5 0 5 0" Padding="5" Background="Red" Foreground="White">Remove</Button>
+        </StackPanel>
     </Grid>
 </Window>

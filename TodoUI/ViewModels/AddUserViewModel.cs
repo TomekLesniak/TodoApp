@@ -53,14 +53,13 @@ namespace TodoUI.ViewModels
 
         public bool CanCreateUser
         {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);
-            }
+            get => !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);
+            
         }
 
         public void CancelCreation()
         {
+            _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(new UserModel());
             this.TryCloseAsync();
         }
     }

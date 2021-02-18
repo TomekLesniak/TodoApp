@@ -7,5 +7,6 @@ namespace TodoLibrary.Data.Users
     {
         void CreateUser(UserModel user);
         List<UserModel> GetUsers();
+        void RemoveUser(UserModel user);
     }
 }
