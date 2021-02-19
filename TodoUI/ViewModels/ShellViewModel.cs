@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TodoLibrary.Data.Categories;
 using TodoLibrary.Data.Tasks;
 using TodoLibrary.Data.Users;
 using TodoLibrary.Data.UserTasks;
@@ -17,11 +18,12 @@ namespace TodoUI.ViewModels
         private readonly IUsersData _usersData;
         private readonly IUserTasksData _userTasksData;
         private readonly ITasksData _tasksData;
+        private readonly ICategoriesData _categoriesData;
         private readonly EventAggregatorProvider _eventTracker;
         private BindableCollection<UserModel> _availableUsers;
         private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, ITasksData tasksData)
+        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, ITasksData tasksData, ICategoriesData categoriesData)
         {
             _eventTracker = EventAggregatorProvider.GetInstance();
             _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
@@ -29,6 +31,7 @@ namespace TodoUI.ViewModels
             _usersData = usersData;
             _userTasksData = userTasksData;
             _tasksData = tasksData;
+            _categoriesData = categoriesData;
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
 
@@ -107,7 +110,7 @@ namespace TodoUI.ViewModels
         {
             if (SelectedUser != null)
             {
-                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData, _tasksData), new CancellationToken());
+                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData, _tasksData, _categoriesData), new CancellationToken());
             }
         }
     }

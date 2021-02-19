@@ -29,7 +29,7 @@
                 </CheckBox.LayoutTransform>
             </CheckBox>
 
-        <TextBlock x:Name="UserHeader" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">Your tasks</TextBlock>
+        <TextBlock x:Name="UserHeader" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Your tasks</TextBlock>
             
             <Button x:Name="LoadStats" Grid.Row="0" Grid.Column="2"
                     Padding="10" Margin="0 0 10 5">
@@ -42,7 +42,7 @@
                       Visibility="{Binding Path=UserTasksIsVisible, Converter={StaticResource BoolToVisConverter} }">
             <ListView.ItemTemplate>
                     <DataTemplate>
-                            <Grid Margin="-5">
+                            <Grid Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -67,7 +67,7 @@
                                         BorderBrush="Black" BorderThickness="1" FontSize="16" Margin="0 0 0 10"></Label>
 
                                 <!-- Row 1 -->
-                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding Path=Task.Description}"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="20" FontStyle="Italic" Margin="20 0 0 0" Text="{Binding Path=Task.Description}"></TextBlock>
                                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                                     <TextBlock>Start at:</TextBlock>
                                     <TextBlock  Margin="10 0 0 0" HorizontalAlignment="Right" Text="{Binding Path=DateStarted, StringFormat=d}"></TextBlock>

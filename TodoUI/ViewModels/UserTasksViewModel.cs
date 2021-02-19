@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TodoLibrary.Data.Categories;
 using TodoLibrary.Data.Tasks;
 using TodoLibrary.Data.UserTasks;
 using TodoLibrary.Models;
@@ -19,15 +20,17 @@ namespace TodoUI.ViewModels
         private readonly UserModel _user;
         private readonly IUserTasksData _userTasksData;
         private readonly ITasksData _tasksData;
+        private readonly ICategoriesData _categoriesData;
         private bool _unfinishedOnly;
         private UserTasksModel _selectedUserTask;
         private bool _userTasksIsVisible = true;
 
-        public UserTasksViewModel(UserModel user, IUserTasksData userTasksData, ITasksData tasksData)
+        public UserTasksViewModel(UserModel user, IUserTasksData userTasksData, ITasksData tasksData, ICategoriesData categoriesData)
         {
             _user = user;
             _userTasksData = userTasksData;
             _tasksData = tasksData;
+            _categoriesData = categoriesData;
 
             _eventTracker = EventAggregatorProvider.GetInstance();
             _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
@@ -83,7 +86,7 @@ namespace TodoUI.ViewModels
         public void CreateUserTask()
         {
             UserTasksIsVisible = !UserTasksIsVisible;
-            ActivateItemAsync(new AddTaskViewModel(_user, _tasksData), new CancellationToken());
+            ActivateItemAsync(new AddTaskViewModel(_user, _tasksData, _categoriesData), new CancellationToken());
         }
 
         public void CompleteUserTask()
@@ -101,6 +104,13 @@ namespace TodoUI.ViewModels
         {
             UserTasksIsVisible = true;
 
+            if (message.Task == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            UserTasks.Add(message);
+            
             return Task.CompletedTask;
         }
     }

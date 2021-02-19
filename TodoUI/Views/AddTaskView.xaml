@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
 
@@ -43,12 +43,12 @@
 
         <!-- Row 3 -->
         <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 10">Title</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" x:Name="Title" MinWidth="250" Margin="5"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="Title" MinWidth="200" Margin="5"></TextBox>
         <TextBlock Grid.Row="3" Grid.Column="3" Margin="0 10">Choose deadline</TextBlock>
 
         <!-- Row 4 -->
         <TextBlock Grid.Row="4" Grid.Column="0" Margin="0 10">Description</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" x:Name="Description" MinWidth="250" Margin="5" ></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="Description" MinWidth="200" Margin="5" ></TextBox>
 
         <TextBlock Grid.Row="4" Grid.Column="2" Margin="5"> - AND - </TextBlock>
 
@@ -57,9 +57,9 @@
 
         <!-- Row 5 -->
         <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 10">Priority</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Priority" MinWidth="250" Margin="5" ></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Priority" MinWidth="200" Margin="5" ></TextBox>
 
-        <ContentControl Grid.Row="5" Grid.Column="2" Grid.RowSpan="2" x:Name="ActiveItem" Margin="10"></ContentControl>
+        <ContentControl Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Grid.ColumnSpan="2" x:Name="ActiveItem" Margin="10"></ContentControl>
             <!-- Row 6 -->
         <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Margin="5">
             <TextBlock>Choose category</TextBlock>
@@ -69,9 +69,9 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="AvailableCategories" DisplayMemberPath="Title"
-                          SelectedItem="{Binding Path=SelectedCategory, Mode=OneWayToSource}">
+                          SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay}">
                 </ComboBox>
-                <Button Grid.Column="1" x:Name="CreateCategory">+</Button>
+                <Button Grid.Column="1" x:Name="CreateCategory" Background="GreenYellow">+</Button>
             </Grid>
         </StackPanel>
         
