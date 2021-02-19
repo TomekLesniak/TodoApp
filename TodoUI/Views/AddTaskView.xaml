@@ -4,9 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TodoUI.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"  Background="White" FontSize="30"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button x:Name="CreateTask">Create task</Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Row 0 -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" x:Name="HeaderMessage" FontSize="36" FontWeight="Bold"></TextBlock>
+
+        <!-- Row 1 -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 10 0 0">
+            <TextBlock>Choose existing task</TextBlock>
+            <ComboBox x:Name="AvailableTasks" DisplayMemberPath="Title"
+                      SelectedItem="{Binding Path=SelectedTask, Mode=OneWayToSource}">
+            </ComboBox>
+        </StackPanel>
+
+
+        <!-- Row 2 -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">- OR -</TextBlock>
+
+
+        <!-- Row 3 -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 10">Title</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="Title" MinWidth="250" Margin="5"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="3" Margin="0 10">Choose deadline</TextBlock>
+
+        <!-- Row 4 -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0 10">Description</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="Description" MinWidth="250" Margin="5" ></TextBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="2" Margin="5"> - AND - </TextBlock>
+
+        <DatePicker Grid.Row="4" Grid.Column="3" x:Name="Deadline" Margin="5"></DatePicker>
+
+
+        <!-- Row 5 -->
+        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 10">Priority</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Priority" MinWidth="250" Margin="5" ></TextBox>
+
+        <ContentControl Grid.Row="5" Grid.Column="2" Grid.RowSpan="2" x:Name="ActiveItem" Margin="10"></ContentControl>
+            <!-- Row 6 -->
+        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Margin="5">
+            <TextBlock>Choose category</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="AvailableCategories" DisplayMemberPath="Title"
+                          SelectedItem="{Binding Path=SelectedCategory, Mode=OneWayToSource}">
+                </ComboBox>
+                <Button Grid.Column="1" x:Name="CreateCategory">+</Button>
+            </Grid>
+        </StackPanel>
+        
+        <!-- Row 7 -->
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="CreateTask" Padding="5" Margin="0 0 10 0">Create Task</Button>
+            <Button x:Name="CancelCreation" Padding="5" Margin="10 0 0 0" Foreground="White" Background="Red">Cancel Creation</Button>
+        </StackPanel>
+
     </Grid>
 </UserControl>

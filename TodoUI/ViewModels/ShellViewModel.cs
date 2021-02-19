@@ -16,17 +16,19 @@ namespace TodoUI.ViewModels
     {
         private readonly IUsersData _usersData;
         private readonly IUserTasksData _userTasksData;
+        private readonly ITasksData _tasksData;
         private readonly EventAggregatorProvider _eventTracker;
         private BindableCollection<UserModel> _availableUsers;
         private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData)
+        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, ITasksData tasksData)
         {
             _eventTracker = EventAggregatorProvider.GetInstance();
             _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
          
             _usersData = usersData;
             _userTasksData = userTasksData;
+            _tasksData = tasksData;
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
 
@@ -105,7 +107,7 @@ namespace TodoUI.ViewModels
         {
             if (SelectedUser != null)
             {
-                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData), new CancellationToken());
+                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData, _tasksData), new CancellationToken());
             }
         }
     }
