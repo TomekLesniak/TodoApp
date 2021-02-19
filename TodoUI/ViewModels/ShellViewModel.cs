@@ -15,16 +15,18 @@ namespace TodoUI.ViewModels
     public class ShellViewModel : Conductor<object>, IHandle<UserModel>
     {
         private readonly IUsersData _usersData;
+        private readonly IUserTasksData _userTasksData;
         private readonly EventAggregatorProvider _eventTracker;
         private BindableCollection<UserModel> _availableUsers;
         private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData, EventAggregatorProvider eventTracker)
+        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, EventAggregatorProvider eventTracker)
         {
             _eventTracker = eventTracker;
             _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
          
             _usersData = usersData;
+            _userTasksData = userTasksData;
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
 
@@ -47,6 +49,7 @@ namespace TodoUI.ViewModels
                 _selectedUser = value;
                 NotifyOfPropertyChange(() => SelectedUser);
                 NotifyOfPropertyChange(() => CanRemoveUser);
+                LoadUserTasks();
             }
         }
 
@@ -96,6 +99,14 @@ namespace TodoUI.ViewModels
             AvailableUsers.Add(message);
             
             return Task.CompletedTask;
+        }
+
+        private void LoadUserTasks()
+        {
+            if (SelectedUser != null)
+            {
+                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData), new CancellationToken());
+            }
         }
     }
 }

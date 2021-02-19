@@ -36,3 +36,10 @@ namespace TodoLibrary.Models
         public TaskModel Task { get; set; }
     }
 }
+
+
+/*
+ * <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Path=Task.Title}"></TextBlock>
+                                <TextBlock Text="{Binding Path=Task.Description}"></TextBlock>
+                            </StackPanel>*/

@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="TodoUI.Views.UserTasksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TodoUI.Views"
+             mc:Ignorable="d" Background="White" FontSize="30"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Row 0 -->
+            <CheckBox x:Name="UnfinishedOnly" Grid.Row="0" Grid.Column="0" FontSize="12"
+                      Margin="10 10 0 0"> Finished only
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+        <TextBlock x:Name="UserHeader" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">Your tasks</TextBlock>
+            
+            <Button x:Name="LoadStats" Grid.Row="0" Grid.Column="2"
+                    Padding="10" Margin="0 0 10 5">
+                Stats
+            </Button>
+             <!-- Row 1 -->
+
+        <ListView x:Name="UserTasks" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="50 0"
+                      SelectedItem="{Binding Path=SelectedUserTask, Mode=OneWayToSource}" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                            <Grid Margin="-5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Row 0 -->
+                                <TextBlock Grid.Row="0" Grid.Column="0"  Text="{Binding Path=Task.Title}"></TextBlock>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
+                            <Label  FontSize="16" BorderThickness="1 1 0 1 " BorderBrush="Black" Content="Finished: "/>
+                            <Label  FontSize="16" BorderThickness="0 1 1 1 " BorderBrush="Black" Content="{Binding Path=IsFinished}"/>
+                        </StackPanel>
+                        
+
+                                 <Label Grid.Row="0" Grid.Column="2" Content="{Binding Path=Task.CategoryModel.Title}" HorizontalAlignment="Right"
+                                        BorderBrush="Black" BorderThickness="1" FontSize="16" Margin="0 0 0 10"></Label>
+
+                                <!-- Row 1 -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding Path=Task.Description}"></TextBlock>
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock>Start at:</TextBlock>
+                            <TextBlock  Margin="10 0 0 0" HorizontalAlignment="Right" Text="{Binding Path=DateStarted, StringFormat=d}"></TextBlock>
+
+</StackPanel>
+                                <!-- Row 2 -->
+                        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock>Deadline: </TextBlock>
+                            <TextBlock  Margin="10 0 0 0" Text="{Binding Path=DateDeadLine, StringFormat=d}"></TextBlock>
+
+</StackPanel>
+
+
+                    </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
+            <!-- Row 2 -->
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="0 10 0 0">
+                <Button x:Name="CreateUserTask" Margin="0 0 10 0" Padding="10">Add Task</Button>
+                <Button x:Name="CompleteUserTask" Margin="10 0 0 0" Padding="10" Background="GreenYellow">Complete Task</Button>
+            </StackPanel>
+    </Grid>
+</UserControl>

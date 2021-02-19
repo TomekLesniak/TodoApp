@@ -54,7 +54,6 @@ namespace TodoUI.ViewModels
         public bool CanCreateUser
         {
             get => !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);
-            
         }
 
         public void CancelCreation()
