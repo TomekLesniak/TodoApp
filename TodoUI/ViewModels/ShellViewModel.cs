@@ -20,9 +20,9 @@ namespace TodoUI.ViewModels
         private BindableCollection<UserModel> _availableUsers;
         private UserModel _selectedUser;
 
-        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, EventAggregatorProvider eventTracker)
+        public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData)
         {
-            _eventTracker = eventTracker;
+            _eventTracker = EventAggregatorProvider.GetInstance();
             _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
          
             _usersData = usersData;
@@ -55,7 +55,7 @@ namespace TodoUI.ViewModels
 
         public void AddUser()
         {
-            ActivateItemAsync(new AddUserViewModel(_eventTracker), new CancellationToken());
+            ActivateItemAsync(new AddUserViewModel(), new CancellationToken());
             NotifyOfPropertyChange(() => CanAddUser);
         }
         

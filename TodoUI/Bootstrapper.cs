@@ -29,7 +29,6 @@ namespace TodoUI
         protected override void Configure()
         {
             _container.Singleton<IWindowManager, WindowManager>();
-            _container.Singleton<EventAggregatorProvider>();
             _container.Singleton<ShellViewModel>();
 
             _container.PerRequest<IUsersData, UsersData>();

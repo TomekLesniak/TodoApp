@@ -12,9 +12,9 @@ namespace TodoUI.ViewModels
         private string _lastName;
         private string _firstName;
 
-        public AddUserViewModel(EventAggregatorProvider eventTracker)
+        public AddUserViewModel()
         {
-            _eventTracker = eventTracker;
+            _eventTracker = EventAggregatorProvider.GetInstance();
         }
 
         public string FirstName
