@@ -30,4 +30,4 @@ Simple to-do application with tasks, priorities, categories & more to come.
  ## Inspiration
  
 Made after lots of hours on online courses & university workshops to memorize what I`ve learned so far and practice in more of a 'real life' project.
-Big thank you to Tim from [IAmTimCorey](https://www.youtube.com/user/IAmTimCorey/videos) for bringing my developer skills to another level.
+Big thank you to Tim from [IAmTimCorey](https://www.youtube.com/user/IAmTimCorey/videos) for bringing my developer skills to another level and my C# university lecturer [Krzysztof Molenda](https://github.com/kmolenda/)
