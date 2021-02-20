@@ -23,7 +23,7 @@ namespace TodoUI.ViewModels
         private readonly IUserTasksData _userTasksData;
         private readonly ITasksData _tasksData;
         private readonly ICategoriesData _categoriesData;
-        private bool _unfinishedOnly;
+        private bool _unfinishedOnly = true;
         private UserTasksModel _selectedUserTask;
         private bool _userTasksIsVisible = true;
 
@@ -36,7 +36,24 @@ namespace TodoUI.ViewModels
             _categoriesData = categoriesData;
 
             _eventTracker = EventAggregatorProvider.GetInstance();
-            UserTasks = new BindableCollection<UserTasksModel>(_userTasksData.GetUserTasks(user.Id));
+            LoadUserTasks();
+        }
+
+        private void LoadUserTasks()
+        {
+            List<UserTasksModel> selectedUserTasks;
+            
+            if (UnfinishedOnly)
+            {
+                selectedUserTasks = _userTasksData.GetUserTasks(_user.Id).Where(x => x.IsFinished != UnfinishedOnly)
+                    .ToList();
+            }
+            else
+            {
+                selectedUserTasks = _userTasksData.GetUserTasks(_user.Id).ToList();
+            }
+            
+            UserTasks = new BindableCollection<UserTasksModel>(selectedUserTasks); // true
         }
         
         protected override Task OnActivateAsync(CancellationToken cancellationToken)
@@ -81,6 +98,7 @@ namespace TodoUI.ViewModels
                 _selectedUserTask = value;
                 NotifyOfPropertyChange(() => CanCompleteUserTask);
                 NotifyOfPropertyChange(() => SelectedUserTask);
+                NotifyOfPropertyChange(() => UserTasks);
             }
         }
 
@@ -91,6 +109,7 @@ namespace TodoUI.ViewModels
             {
                 _unfinishedOnly = value;
                 NotifyOfPropertyChange(() => UnfinishedOnly);
+                LoadUserTasks();
             }
         }
 
@@ -117,7 +136,17 @@ namespace TodoUI.ViewModels
 
         public void CompleteUserTask()
         {
-            //todo: Mark task as completed
+            SelectedUserTask.IsFinished = true;
+            _userTasksData.CompleteUserTask(SelectedUserTask.Id);
+            
+            UserTasks.Refresh();
+            
+            if (UnfinishedOnly)
+            {
+                UserTasks.Remove(SelectedUserTask);
+            }
+            
+            NotifyOfPropertyChange(() => CanCompleteUserTask);
         }
 
         public bool CanCompleteUserTask

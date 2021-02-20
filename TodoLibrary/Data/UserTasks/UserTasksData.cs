@@ -23,6 +23,14 @@ namespace TodoLibrary.Data.UserTasks
             _db.SaveChanges();
         }
 
+        public void CompleteUserTask(int taskId)
+        {
+            var task = _db.UserTasks.Find(taskId);
+            task.IsFinished = true;
+            _db.SaveChanges();
+        }
+
+
         public List<UserTasksModel> GetUserTasks(int userId)
         {
             var output = _db.UserTasks

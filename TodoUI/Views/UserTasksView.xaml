@@ -59,7 +59,7 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
                             <Label  FontSize="16" BorderThickness="1 1 0 1 " BorderBrush="Black" Content="Finished: "/>
-                            <Label  FontSize="16" BorderThickness="0 1 1 1 " BorderBrush="Black" Content="{Binding Path=IsFinished}"/>
+                            <Label  FontSize="16" BorderThickness="0 1 1 1 " BorderBrush="Black" Content="{Binding Path=IsFinished, Mode=TwoWay}"/>
                         </StackPanel>
                         
 
@@ -67,7 +67,7 @@
                                         BorderBrush="Black" BorderThickness="1" FontSize="16" Margin="0 0 0 10"></Label>
 
                                 <!-- Row 1 -->
-                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="20" FontStyle="Italic" Margin="20 0 0 0" Text="{Binding Path=Task.Description}"></TextBlock>
+                                <TextBlock MaxWidth="300" TextWrapping="Wrap" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="20" FontStyle="Italic" Margin="20 0 0 0" Text="{Binding Path=Task.Description}"></TextBlock>
                                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                                     <TextBlock>Start at:</TextBlock>
                                     <TextBlock  Margin="10 0 0 0" HorizontalAlignment="Right" Text="{Binding Path=DateStarted, StringFormat=d}"></TextBlock>
