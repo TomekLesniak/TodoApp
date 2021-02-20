@@ -19,7 +19,14 @@ namespace TodoLibrary.Data.Tasks
             _db.Tasks.Add(task);
             _db.SaveChanges();
         }
-        
+
+        public TaskModel GetTask(int id)
+        {
+            return _db.Tasks.Where(x => x.Id == id)
+                .Include(x => x.CategoryModel)
+                .First();
+        }
+
         public List<TaskModel> GetTasks()
         {
             return _db.Tasks

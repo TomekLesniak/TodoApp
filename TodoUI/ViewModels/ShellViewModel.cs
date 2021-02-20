@@ -26,7 +26,6 @@ namespace TodoUI.ViewModels
         public ShellViewModel(IUsersData usersData, IUserTasksData userTasksData, ITasksData tasksData, ICategoriesData categoriesData)
         {
             _eventTracker = EventAggregatorProvider.GetInstance();
-            _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
          
             _usersData = usersData;
             _userTasksData = userTasksData;
@@ -35,6 +34,17 @@ namespace TodoUI.ViewModels
             AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
         }
 
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
+        {
+            _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
+            return base.OnActivateAsync(cancellationToken);
+        }
+
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventTracker.TrackerEventAggregator.Unsubscribe(this);
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
 
         public BindableCollection<UserModel> AvailableUsers
         {
@@ -81,6 +91,11 @@ namespace TodoUI.ViewModels
         {
             _usersData.RemoveUser(SelectedUser);
             AvailableUsers.Remove(SelectedUser);
+
+            if (ActiveItem != null)
+            {
+                DeactivateItemAsync(ActiveItem, true, new CancellationToken());
+            }
         }
 
         public bool CanRemoveUser
@@ -110,8 +125,14 @@ namespace TodoUI.ViewModels
         {
             if (SelectedUser != null)
             {
-                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _userTasksData, _tasksData, _categoriesData), new CancellationToken());
+                if (ActiveItem != null)
+                {
+                    DeactivateItemAsync(ActiveItem, true, new CancellationToken());
+                }
+                ActivateItemAsync(new UserTasksViewModel(SelectedUser, _usersData, _userTasksData, _tasksData, _categoriesData), new CancellationToken());
             }
+            
         }
+        
     }
 }

@@ -22,6 +22,11 @@ namespace TodoLibrary.Data.Users
             _db.SaveChanges();
         }
 
+        public UserModel GetUser(int id)
+        {
+            return _db.Users.First(x => x.Id == id);
+        }
+
         public List<UserModel> GetUsers()
         {
             return _db.Users.ToList();

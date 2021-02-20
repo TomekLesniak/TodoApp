@@ -21,6 +21,11 @@ namespace TodoLibrary.Data.Categories
             _db.SaveChanges();
         }
 
+        public CategoryModel GetCategory(int id)
+        {
+            return _db.Categories.First(x => x.Id == id);
+        }
+
         public List<CategoryModel> GetCategories()
         {
             return _db.Categories.ToList();

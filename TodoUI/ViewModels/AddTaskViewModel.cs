@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Caliburn.Micro;
 using TodoLibrary.Data.Categories;
 using TodoLibrary.Data.Tasks;
+using TodoLibrary.Data.Users;
 using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
@@ -16,6 +17,7 @@ namespace TodoUI.ViewModels
         private readonly UserModel _user;
         private readonly ITasksData _tasksData;
         private readonly ICategoriesData _categoriesData;
+        private readonly IUsersData _usersData;
         private readonly EventAggregatorProvider _eventTracker;
         private BindableCollection<TaskModel> _availableTasks;
         private TaskModel _selectedTask;
@@ -26,16 +28,28 @@ namespace TodoUI.ViewModels
         private BindableCollection<CategoryModel> _availableCategories;
         private CategoryModel _selectedCategory;
 
-        public AddTaskViewModel(UserModel user, ITasksData tasksData, ICategoriesData categoriesData)
+        public AddTaskViewModel(UserModel user, ITasksData tasksData, ICategoriesData categoriesData, IUsersData usersData)
         {
             _user = user;
             _tasksData = tasksData;
             _categoriesData = categoriesData;
+            _usersData = usersData;
             _eventTracker = EventAggregatorProvider.GetInstance();
-            _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
 
             AvailableTasks = new BindableCollection<TaskModel>(_tasksData.GetTasks());
             AvailableCategories = new BindableCollection<CategoryModel>(_categoriesData.GetCategories());
+        }
+
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
+        {
+            _eventTracker.TrackerEventAggregator.SubscribeOnUIThread(this);
+            return base.OnActivateAsync(cancellationToken);
+        }
+
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventTracker.TrackerEventAggregator.Unsubscribe(this);
+            return base.OnDeactivateAsync(close, cancellationToken);
         }
 
         public string HeaderMessage => $"Creating task for {_user.FirstName}";
@@ -146,13 +160,14 @@ namespace TodoUI.ViewModels
 
             var newUserTask = new UserTasksModel()
             {
-                User = _user,
                 DateStarted = DateTime.Today,
                 DateDeadLine = Deadline,
                 Priority = Priority,
                 IsFinished = false,
                 Task = SelectedTask,
+                User = _user
             };
+
             
             _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(newUserTask);
             this.TryCloseAsync();
