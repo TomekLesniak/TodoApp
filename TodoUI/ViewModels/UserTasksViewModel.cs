@@ -115,7 +115,20 @@ namespace TodoUI.ViewModels
 
         public void LoadStats()
         {
-            //todo: Load another view
+            var allUserTasks = _userTasksData.GetUserTasks(_user.Id);
+
+            if (ActiveItem != null && ActiveItem.GetType() == typeof(StatisticsViewModel))
+            {
+                DeactivateItemAsync(ActiveItem, true, new CancellationToken());
+            }
+            else
+            {
+                ActivateItemAsync(new StatisticsViewModel(allUserTasks), new CancellationToken());
+            }
+
+            UserTasksIsVisible = !UserTasksIsVisible;
+            NotifyOfPropertyChange(() => CanCreateUserTask);
+            SelectedUserTask = null;
         }
 
         public void CreateUserTask()
