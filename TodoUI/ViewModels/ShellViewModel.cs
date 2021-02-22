@@ -109,6 +109,7 @@ namespace TodoUI.ViewModels
         public Task HandleAsync(UserModel message, CancellationToken cancellationToken)
         {
             NotifyOfPropertyChange(() => CanAddUser);
+            LoadUserTasks();
 
             if (string.IsNullOrWhiteSpace(message.FirstName))
             {
