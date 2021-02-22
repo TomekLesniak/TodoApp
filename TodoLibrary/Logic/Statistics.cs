@@ -6,10 +6,17 @@ using TodoLibrary.Models;
 
 namespace TodoLibrary.Logic
 {
+    /// <summary>
+    /// Implementation of IStatistics calculation interface
+    /// </summary>
     public class Statistics : IStatistics
     {
         private readonly List<UserTasksModel> _userTasks;
 
+        /// <summary>
+        /// Initializes user tasks list.
+        /// </summary>
+        /// <param name="userTasks">List of all tasks of particular user</param>
         public Statistics(List<UserTasksModel> userTasks)
         {
             _userTasks = userTasks;

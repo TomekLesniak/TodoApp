@@ -5,6 +5,9 @@ using Caliburn.Micro;
 
 namespace TodoUI
 {
+    /// <summary>
+    /// Singleton for loosely-coupled application-wide event system.
+    /// </summary>
     public class EventAggregatorProvider
     {
         public EventAggregator TrackerEventAggregator { get; set; }

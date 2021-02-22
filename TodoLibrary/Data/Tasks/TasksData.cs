@@ -9,6 +9,10 @@ namespace TodoLibrary.Data.Tasks
     {
         private readonly ApplicationDbContext _db;
 
+        /// <summary>
+        /// Creates and initialize database connection
+        /// </summary>
+        /// <param name="db">Injected via dependency injection</param>
         public TasksData(ApplicationDbContext db)
         {
             _db = db;

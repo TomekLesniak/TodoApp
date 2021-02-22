@@ -6,6 +6,9 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
+    /// <summary>
+    /// View model for corresponding AddUserView
+    /// </summary>
     public class AddUserViewModel : Screen
     {
         private readonly EventAggregatorProvider _eventTracker;
@@ -56,6 +59,9 @@ namespace TodoUI.ViewModels
             get => !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);
         }
 
+        /// <summary>
+        /// Closing this view.
+        /// </summary>
         public void CancelCreation()
         {
             _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(new UserModel());

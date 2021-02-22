@@ -12,6 +12,10 @@ using TodoUI.ViewModels;
 
 namespace TodoUI
 {
+    /// <summary>
+    /// Required for caliburn micro.
+    /// With custom dependency injection for application.
+    /// </summary>
     public class Bootstrapper : BootstrapperBase
     {
         private SimpleContainer _container = new SimpleContainer();

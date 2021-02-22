@@ -6,6 +6,9 @@ using TodoLibrary.Models;
 
 namespace TodoLibrary
 {
+    /// <summary>
+    /// Application DbContext to work with database.
+    /// </summary>
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)

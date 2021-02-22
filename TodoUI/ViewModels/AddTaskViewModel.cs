@@ -12,6 +12,9 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
+    /// <summary>
+    /// View model for corresponding AddTaskView
+    /// </summary>
     public class AddTaskViewModel : Conductor<object>, IHandle<CategoryModel>
     {
         private readonly UserModel _user;
@@ -28,6 +31,13 @@ namespace TodoUI.ViewModels
         private BindableCollection<CategoryModel> _availableCategories;
         private CategoryModel _selectedCategory;
 
+        /// <summary>
+        /// Initializes required information to work with screen & tasks.
+        /// </summary>
+        /// <param name="user">User for whom the task is being created for</param>
+        /// <param name="tasksData">Implementation of ITasksData</param>
+        /// <param name="categoriesData">Implementation of ICategoriesData</param>
+        /// <param name="usersData">Implementation of IUsersData</param>
         public AddTaskViewModel(UserModel user, ITasksData tasksData, ICategoriesData categoriesData, IUsersData usersData)
         {
             _user = user;
@@ -52,8 +62,14 @@ namespace TodoUI.ViewModels
             return base.OnDeactivateAsync(close, cancellationToken);
         }
 
+        /// <summary>
+        /// Display header message.
+        /// </summary>
         public string HeaderMessage => $"Creating task for {_user.FirstName}";
 
+        /// <summary>
+        /// List of available tasks that has been created
+        /// </summary>
         public BindableCollection<TaskModel> AvailableTasks
         {
             get => _availableTasks;
@@ -64,6 +80,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Currently selected task
+        /// </summary>
         public TaskModel SelectedTask
         {
             get => _selectedTask;
@@ -85,6 +104,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// New task title field.
+        /// </summary>
         public string Title
         {
             get => _title;
@@ -96,6 +118,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// New task deadline date
+        /// </summary>
         public DateTime Deadline
         {
             get => _deadline;
@@ -107,6 +132,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// New task description
+        /// </summary>
         public string Description
         {
             get => _description;
@@ -118,6 +146,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// New task priority
+        /// </summary>
         public int Priority
         {
             get => _priority;
@@ -129,6 +160,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// List of all available categories created.
+        /// </summary>
         public BindableCollection<CategoryModel> AvailableCategories
         {
             get => _availableCategories;
@@ -139,6 +173,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Currently selected category for new task
+        /// </summary>
         public CategoryModel SelectedCategory
         {
             get => _selectedCategory;
@@ -151,6 +188,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// When pressed, creates new task from populated form and saves to database.
+        /// </summary>
         public void CreateTask()
         {
             if (SelectedTask == null)
@@ -187,6 +227,9 @@ namespace TodoUI.ViewModels
             SelectedTask = newTask;
         }
 
+        /// <summary>
+        /// Check if all fields are valid.
+        /// </summary>
         public bool CanCreateTask 
         {
             get
@@ -203,18 +246,29 @@ namespace TodoUI.ViewModels
             }
         }
         
+        /// <summary>
+        /// Opens the view for new category creation.
+        /// </summary>
         public void CreateCategory()
         {
             ActivateItemAsync(new AddCategoryViewModel(_categoriesData), new CancellationToken());
         }
 
-        
+        /// <summary>
+        /// Closing this view.
+        /// </summary>
         public void CancelCreation()
         {
             _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(new UserTasksModel());
             this.TryCloseAsync();
         }
 
+        /// <summary>
+        /// Handle passed category model from CreateCategoryView.
+        /// Sets SelectedCategory to new category passed in.
+        /// </summary>
+        /// <param name="message">Category information</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         public Task HandleAsync(CategoryModel message, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(message.Title))

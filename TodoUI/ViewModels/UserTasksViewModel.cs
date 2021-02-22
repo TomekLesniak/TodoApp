@@ -14,6 +14,9 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
+    /// <summary>
+    /// View model for corresponding UserTasksView
+    /// </summary>
     public class UserTasksViewModel : Conductor<object>, IHandle<UserTasksModel>
     {
         private BindableCollection<UserTasksModel> _userTasks;
@@ -27,6 +30,14 @@ namespace TodoUI.ViewModels
         private UserTasksModel _selectedUserTask;
         private bool _userTasksIsVisible = true;
 
+        /// <summary>
+        /// Initializes required information to work with screen & user tasks.
+        /// </summary>
+        /// <param name="user">User for whom the tasks are displayed for</param>
+        /// <param name="usersData">IUsersData implementation</param>
+        /// <param name="userTasksData">IUserTasksData implementation</param>
+        /// <param name="tasksData">ITasksData implementation</param>
+        /// <param name="categoriesData">ICategoriesData implementation</param>
         public UserTasksViewModel(UserModel user, IUsersData usersData, IUserTasksData userTasksData, ITasksData tasksData, ICategoriesData categoriesData)
         {
             _user = user;
@@ -68,8 +79,14 @@ namespace TodoUI.ViewModels
             return base.OnDeactivateAsync(close, cancellationToken);
         }
 
+        /// <summary>
+        /// Display user header message
+        /// </summary>
         public string UserHeader => $"{_user.FirstName} tasks";
 
+        /// <summary>
+        /// Toggles user task visibility.
+        /// </summary>
         public bool UserTasksIsVisible
         {
             get => _userTasksIsVisible;
@@ -80,6 +97,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// List of all available tasks for currently filter search.
+        /// </summary>
         public BindableCollection<UserTasksModel> UserTasks
         {
             get => _userTasks;
@@ -90,6 +110,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Currently selected task
+        /// </summary>
         public UserTasksModel SelectedUserTask
         {
             get => _selectedUserTask;
@@ -102,6 +125,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Filter option. 
+        /// </summary>
         public bool UnfinishedOnly
         {
             get => _unfinishedOnly;
@@ -113,6 +139,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Open the view with statistics for this user.
+        /// </summary>
         public void LoadStats()
         {
             var allUserTasks = _userTasksData.GetUserTasks(_user.Id);
@@ -138,7 +167,10 @@ namespace TodoUI.ViewModels
             NotifyOfPropertyChange(() => CanCompleteUserTask);
 
         }
-
+        
+        /// <summary>
+        /// Open the view for new task creation
+        /// </summary>
         public void CreateUserTask()
         {
             UserTasksIsVisible = !UserTasksIsVisible;
@@ -147,6 +179,9 @@ namespace TodoUI.ViewModels
             NotifyOfPropertyChange(() => CanCompleteUserTask);
         }
 
+        /// <summary>
+        /// Check if no child view is currently open.
+        /// </summary>
         public bool CanCreateUserTask
         {
             get
@@ -155,6 +190,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Marks selected task as completed.
+        /// </summary>
         public void CompleteUserTask()
         {
             SelectedUserTask.IsFinished = true;
@@ -170,6 +208,9 @@ namespace TodoUI.ViewModels
             NotifyOfPropertyChange(() => CanCompleteUserTask);
         }
 
+        /// <summary>
+        /// Checks if selected task can be completed
+        /// </summary>
         public bool CanCompleteUserTask
         {
             get
@@ -179,6 +220,11 @@ namespace TodoUI.ViewModels
             }
         }
         
+        /// <summary>
+        /// Add newly created task to user tasks.
+        /// </summary>
+        /// <param name="message">New UserTaskModel</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         public Task HandleAsync(UserTasksModel message, CancellationToken cancellationToken)
         {
             UserTasksIsVisible = true;
