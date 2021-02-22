@@ -3,9 +3,21 @@
 Simple to-do application with tasks, priorities, categories & more to come. 
 
 ## Table of contents
+ - [Installation](#installation)
  - [Technologies](#technologies)
  - [Features](#features)
  - [Inspiration](#inspiration)
+
+## Installation
+ 1. Clone the repo
+ 2. Set ToDoUI as startup project
+ 3. Open package manager console and inside switch default project to: TodoLibrary
+ 4. Type
+ ```
+ update-database
+ ```
+ 5. Done!
+ 
  
 ## Technologies
 
