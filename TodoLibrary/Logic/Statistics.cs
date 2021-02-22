@@ -47,7 +47,7 @@ namespace TodoLibrary.Logic
                 if (failedTasks > 0)
                 {
                     int totalTasks = GetTotalAmountOfTasks();
-                    output = Math.Round((decimal) failedTasks / totalTasks, 2);
+                    output = Math.Round(((decimal) failedTasks / totalTasks) * 100, 2);
                 }
             }
 

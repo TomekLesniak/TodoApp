@@ -127,6 +127,14 @@ namespace TodoUI.ViewModels
             }
 
             UserTasksIsVisible = !UserTasksIsVisible;
+
+
+            if (UserTasksIsVisible && ActiveItem != null)
+            {
+                MessageBox.Show("Bug appeared");
+                UserTasksIsVisible = false;
+            }
+
             NotifyOfPropertyChange(() => CanCreateUserTask);
             SelectedUserTask = null;
         }
@@ -173,6 +181,7 @@ namespace TodoUI.ViewModels
         public Task HandleAsync(UserTasksModel message, CancellationToken cancellationToken)
         {
             UserTasksIsVisible = true;
+            
             NotifyOfPropertyChange(() => CanCreateUserTask);
 
             if (message.Task == null)
