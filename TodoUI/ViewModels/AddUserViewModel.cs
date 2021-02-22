@@ -15,11 +15,17 @@ namespace TodoUI.ViewModels
         private string _lastName;
         private string _firstName;
 
+        /// <summary>
+        /// Initialize required information to work with screen.
+        /// </summary>
         public AddUserViewModel()
         {
             _eventTracker = EventAggregatorProvider.GetInstance();
         }
 
+        /// <summary>
+        /// New user first name
+        /// </summary>
         public string FirstName
         {
             get => _firstName;
@@ -31,6 +37,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// New user lastname.
+        /// </summary>
         public string LastName
         {
             get => _lastName;
@@ -42,6 +51,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// When pressed, creates new user from populated form and saves to database.
+        /// </summary>
         public void CreateUser()
         {
             var user = new UserModel()
@@ -54,6 +66,9 @@ namespace TodoUI.ViewModels
             this.TryCloseAsync();
         }
 
+        /// <summary>
+        /// Check if all fields are valid
+        /// </summary>
         public bool CanCreateUser
         {
             get => !string.IsNullOrWhiteSpace(FirstName) && !string.IsNullOrWhiteSpace(LastName);

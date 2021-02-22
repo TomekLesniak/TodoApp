@@ -46,8 +46,8 @@ namespace TodoUI.ViewModels
             _usersData = usersData;
             _eventTracker = EventAggregatorProvider.GetInstance();
 
-            AvailableTasks = new BindableCollection<TaskModel>(_tasksData.GetTasks());
-            AvailableCategories = new BindableCollection<CategoryModel>(_categoriesData.GetCategories());
+            AvailableTasks = new BindableCollection<TaskModel>(_tasksData?.GetTasks() ?? new List<TaskModel>());
+            AvailableCategories = new BindableCollection<CategoryModel>(_categoriesData?.GetCategories() ?? new List<CategoryModel>());
         }
 
         protected override Task OnActivateAsync(CancellationToken cancellationToken)

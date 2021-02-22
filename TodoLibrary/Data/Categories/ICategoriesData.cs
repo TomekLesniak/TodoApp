@@ -15,13 +15,13 @@ namespace TodoLibrary.Data.Categories
         /// Get category by id from database.
         /// </summary>
         /// <param name="id">Unique identifier for category.</param>
-        /// <returns>Found category model; null otherwise</returns>
+        /// <returns>Found category; null otherwise</returns>
         CategoryModel GetCategory(int id);
 
         /// <summary>
         /// Get all categories from database.
         /// </summary>
-        /// <returns>List of all available categories; empty list otherwise</returns>
+        /// <returns>List of all available categories; empty list if no records found</returns>
         List<CategoryModel> GetCategories();
     }
 }

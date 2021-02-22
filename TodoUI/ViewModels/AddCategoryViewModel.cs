@@ -7,18 +7,28 @@ using TodoLibrary.Models;
 
 namespace TodoUI.ViewModels
 {
+    /// <summary>
+    /// View model for corresponding AddCategoryView
+    /// </summary>
     public class AddCategoryViewModel : Screen
     {
         private readonly ICategoriesData _categoriesData;
         private readonly EventAggregatorProvider _eventTracker;
         private string _categoryName = "";
 
+        /// <summary>
+        /// Initializes required information to work with screen & categories.
+        /// </summary>
+        /// <param name="categoriesData">CategoriesData implementation</param>
         public AddCategoryViewModel(ICategoriesData categoriesData)
         {
             _categoriesData = categoriesData;
             _eventTracker = EventAggregatorProvider.GetInstance();
         }
 
+        /// <summary>
+        /// New category name
+        /// </summary>
         public string CategoryName
         {
             get => _categoryName;
@@ -30,6 +40,9 @@ namespace TodoUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// When pressed, creates category from populated form and saves to database.
+        /// </summary>
         public void CreateCategory()
         {
             var newCategory = new CategoryModel()
@@ -43,6 +56,10 @@ namespace TodoUI.ViewModels
             this.TryCloseAsync();
         }
         
+        
+        /// <summary>
+        /// Check if category length is valid.
+        /// </summary>
         public bool CanCreateCategory
         {
             get
@@ -51,7 +68,9 @@ namespace TodoUI.ViewModels
             }
         }
         
-        
+        /// <summary>
+        /// Closing this view.
+        /// </summary>
         public void CancelCreation()
         {
             _eventTracker.TrackerEventAggregator.PublishOnUIThreadAsync(new CategoryModel());
