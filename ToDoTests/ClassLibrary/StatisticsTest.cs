@@ -99,8 +99,8 @@ namespace ToDoTests.ClassLibrary
             };
             IStatistics stats = new Statistics(userTasks);
 
-            var actual = stats.GetCompletedPercentage();
-            var expected = 66.67m;
+            var actual = stats.GetFailurePercentage();
+            var expected = 33.33m;
 
             Assert.Equal(expected, actual);
         }
@@ -116,8 +116,8 @@ namespace ToDoTests.ClassLibrary
             };
             IStatistics stats = new Statistics(userTasks);
 
-            var actual = stats.GetCompletedPercentage();
-            var expected = 100.0m;
+            var actual = stats.GetFailurePercentage();
+            var expected = 0;
 
             Assert.Equal(expected, actual);
         }
@@ -133,8 +133,8 @@ namespace ToDoTests.ClassLibrary
             };
             IStatistics stats = new Statistics(userTasks);
 
-            var actual = stats.GetCompletedPercentage();
-            var expected = 0.0m;
+            var actual = stats.GetFailurePercentage();
+            var expected = 100.0m;
 
             Assert.Equal(expected, actual);
         }
