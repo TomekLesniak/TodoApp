@@ -41,7 +41,7 @@ namespace TodoUI.ViewModels
             _userTasksData = userTasksData;
             _tasksData = tasksData;
             _categoriesData = categoriesData;
-            AvailableUsers = new BindableCollection<UserModel>(_usersData.GetUsers());
+            AvailableUsers = new BindableCollection<UserModel>(_usersData?.GetUsers() ?? new List<UserModel>());
         }
 
         protected override Task OnActivateAsync(CancellationToken cancellationToken)
